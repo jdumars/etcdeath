@@ -35,6 +35,15 @@ resource "aws_security_group" "etcdtest" {
     security_groups = ["${aws_security_group.etcdbastion.id}"]
   }
 
+  ingress {
+    from_port = 2379
+    to_port = 2380
+    protocol = "tcp"
+    security_groups = ["${aws_security_group.etcdbastion.id}"]
+    self = true
+  }
+
+
   egress {
     from_port = 0
     to_port = 0
