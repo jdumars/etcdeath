@@ -25,10 +25,6 @@ else
 	MD5=`which md5sum`
 fi
 
-printf '\n'
-printf 'Key count to write to etcd [ infinite ] : '
-read -r COUNT
-
 if [[ $UNATTENDED -eq 1 ]] ; then
 
         COUNT=1
@@ -42,6 +38,9 @@ if [[ $UNATTENDED -eq 1 ]] ; then
         exit 0
 fi
 
+printf '\n'
+printf 'Key count to write to etcd [ infinite ] : '
+read -r COUNT
 
 if [[ -z "$COUNT" ]] ; then
 	
