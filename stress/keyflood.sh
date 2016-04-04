@@ -35,7 +35,7 @@ if [[ -z "$COUNT" ]] ; then
 
 	while [[ $COUNT -lt 999999999999 ]] ; do
 
-		VAL=`echo $COUNT | $MD5`
+		VAL=`echo $COUNT | $MD5 | cut -f1 -d ' ' `
 		curl -L -X PUT http://$IP:2379/v2/keys/$VAL -d value="$COUNT"
 		COUNT=$[COUNT+1]
 	done
@@ -45,7 +45,7 @@ else
 	INC=1
 	while [[ $COUNT -le $INC ]] ; do
 
-    VAL=`echo $COUNT | $MD5`
+    VAL=`echo $COUNT | $MD5 | cut -f1 -d ' '`
     curl -L -X PUT http://$IP:2379/v2/keys/$VAL -d value="$COUNT"
     COUNT=$[COUNT+1]
   done
