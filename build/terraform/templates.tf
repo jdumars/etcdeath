@@ -31,7 +31,6 @@ resource "template_file" "master_cloud_config" {
   vars {
     cluster = "${var.cluster}"
     domain = "${var.domain}"
-    version = "${var.version}"
   }
 }
 
@@ -41,6 +40,5 @@ resource "template_file" "node_cloud_config" {
   vars {
     cluster = "${var.cluster}"
     master_ip = "etcd.${var.domain}"
-    version = "${var.version}"
   }
 }

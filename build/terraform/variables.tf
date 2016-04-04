@@ -30,10 +30,6 @@ variable "ssh_key" {
   description = "Name of the SSH key in AWS that should have acccess to EC2 instances"
 }
 
-variable "version" {
-  description = "Version of Kubernetes to use, e.g. 1.0.0"
-}
-
 variable "zone_id" {
   description = "Zone ID of the Route 53 hosted zone"
 }

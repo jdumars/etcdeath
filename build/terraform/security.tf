@@ -1,7 +1,7 @@
-resource "aws_security_group" "bastion" {
-  name = "bastion"
-  description = "Bastion for SSH access"
-  vpc_id = "${aws_vpc.etcd.id}"
+resource "aws_security_group" "etcdbastion" {
+  name = "etcdbastion"
+  description = "Bastion for etcd cluster SSH access"
+  vpc_id = "${aws_vpc.etcdtest.id}"
 
   ingress {
     from_port = 22
@@ -18,29 +18,21 @@ resource "aws_security_group" "bastion" {
   }
 
   tags {
-    Name = "bastion"
+    Name = "etcdbastion"
     Cluster = "${var.cluster}"
   }
 }
 
-resource "aws_security_group" "etcd" {
-  name = "etcd"
-  description = "etcd quorum"
-  vpc_id = "${aws_vpc.etcd.id}"
+resource "aws_security_group" "etcdtest" {
+  name = "etcdtest"
+  description = "etcd test quorum"
+  vpc_id = "${aws_vpc.etcdtest.id}"
 
   ingress {
     from_port = 22
     to_port = 22
     protocol = "tcp"
-    security_groups = ["${aws_security_group.bastion.id}"]
-  }
-
-  ingress {
-    from_port = "2379"
-    to_port = "2380"
-    protocol = "tcp"
-    security_groups = ["${aws_security_group.etcd.id}"]
-    self = true
+    security_groups = ["${aws_security_group.etcdbastion.id}"]
   }
 
   egress {
@@ -51,7 +43,7 @@ resource "aws_security_group" "etcd" {
   }
 
   tags {
-    Name = "etcd"
+    Name = "etcdtest"
     Cluster = "${var.cluster}"
   }
 }
