@@ -29,6 +29,20 @@ printf '\n'
 printf 'Key count to write to etcd [ infinite ] : '
 read -r COUNT
 
+if [[ $UNATTENDED -eq 1 ]] ; then
+
+        COUNT=1
+
+        while [[ $COUNT -lt 999999999999 ]] ; do
+
+                VAL=`echo $COUNT | $MD5 | cut -f1 -d ' ' `
+                curl -L -X PUT http://$IP:2379/v2/keys/$VAL -d value=$COUNT
+                COUNT=$[COUNT+1]
+        done
+        exit 0
+fi
+
+
 if [[ -z "$COUNT" ]] ; then
 	
 	COUNT=1
