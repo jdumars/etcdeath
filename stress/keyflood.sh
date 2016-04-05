@@ -16,6 +16,11 @@ fi
 
 # Flood etcd keyspace
 
+# Warning: this script will hopelessly corrupt your etcd cluster resulting in the need to remove all WAL and SNAP data and reboot all cluster members
+# With a 32K payload, the time to failure on a 1GB t2.micro is approximately 3.5 minutes
+
+
+
 PAYLOAD_SIZE=4096
 PAYLOAD=`cat /dev/urandom | tr -dc 'a-zA-Z0-9' | fold -w $PAYLOAD_SIZE | head -n 1`
 
