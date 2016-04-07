@@ -49,5 +49,5 @@ terraform destroy
 And, once again enter all those variables (or not... envars FTW!). Make sure you use the same variable entries as before.  This should effectively remove all traces of your cluster.  
 
 # To-do 
-- parralel death scenarios (aka apply changes to all servers simultaneously)
+- parallel death scenarios (aka apply changes to all servers simultaneously)
 - More sophistication
