@@ -14,7 +14,7 @@ else
 	IP=$1
 fi
 
-# Busy cluster activity generator
+# Busy cluster activity generator - you can run more than one at a time to really hit the cluster.
 
 PAYLOAD_SIZE=32
 PAYLOAD=`cat /dev/urandom | tr -dc 'a-zA-Z0-9' | fold -w $PAYLOAD_SIZE | head -n 1`
