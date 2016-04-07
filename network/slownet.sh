@@ -36,8 +36,6 @@ if [[ $UNATTENDED -eq 1 ]] ; then
 
 		sudo tc qdisc add dev eth0 root netem delay 50ms 20ms distribution normal
 	
-		sudo tc qdisc change dev eth0 root netem reorder 0.02 duplicate 0.05 corrupt 0.01
-
 		# run time of script has to be limited before reset - tune this to match your CI engine
 
 		sleep $RUNTIME	
@@ -90,7 +88,7 @@ read -r PING
 echo "Jacking up your network for $LENGTH seconds.  If you ctrl+c you need to manually reset your network!"
 echo "$ sudo tc qdisc del dev eth0 root netem"
 
-sudo tc qdisc add dev eth0 root netem delay $DELAYms $SKEWms $RANDOM%
+sudo tc qdisc add dev eth0 root netem delay ${DELAY}ms ${SKEW}ms ${RANDOM}%
 
 if [[ -z $PING ]] ; then
 
