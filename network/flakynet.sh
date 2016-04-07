@@ -8,14 +8,14 @@ RUNTIME=10
 
 # Warning: this script will do very nasty things to your system and may result in you losing connectivity.  
 # Super big warning to never run this script via cron, at, screen, tmux or nohup but you already know that.
-
+# Random packet loss is specified in the tc command is in percent. The smallest possible non­zero value is: 232 = 0.0000000232%
 
 
 if [[ $UNATTENDED -eq 1 ]] ; then
 
 		# Use tc to jack up your nets - tweak these values to match your use case
 
-		sudo tc qdisc add dev eth0 root netem delay 50ms 20ms distribution normal
+		sudo tc qdisc add dev eth0 root netem loss 15%
 	
 		# run time of script has to be limited before reset - tune this to match your CI engine
 
@@ -29,27 +29,11 @@ if [[ $UNATTENDED -eq 1 ]] ; then
 fi
 
 printf '\n'
-printf 'Delay in milliseconds [ 100 ] : '
-read -r DELAY
+printf 'Packet loss likelihood percent [ 25 ] : '
+read -r LOSS
 
-if [[ -z $DELAY ]] ; then
-	DELAY=100
-fi
-
-printf '\n'
-printf 'plus or minus X milliseconds [ 10 ] : '
-read -r SKEW
-
-if [[ -z $SKEW ]] ; then
-        SKEW=10
-fi
-
-printf '\n'
-printf 'Incident likelihood percent [ 25 ] : '
-read -r RANDOM
-
-if [[ -z $RANDOM ]] ; then
-        RANDOM=100
+if [[ -z $LOSS ]] ; then
+        LOSS=25
 fi
 
 printf '\n'
@@ -69,7 +53,7 @@ read -r PING
 echo "Jacking up your network for $LENGTH seconds.  If you ctrl+c you need to manually reset your network!"
 echo "$ sudo tc qdisc del dev eth0 root netem"
 
-sudo tc qdisc add dev eth0 root netem delay ${DELAY}ms ${SKEW}ms ${RANDOM}%
+sudo tc qdisc add dev eth0 root netem loss ${LOSS}%
 
 if [[ -z $PING ]] ; then
 
