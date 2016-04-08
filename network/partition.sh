@@ -54,7 +54,7 @@ printf 'Ping while you wait? [ y ] : '
 read -r PING
 
 printf '\n'
-printf 'WARNING! You are taking this system out for ' $DUR 'seconds! Are you sure??  [ n ] : '
+printf 'WARNING! You are taking this system out for ' ${LENGTH} 'seconds! Are you sure??  [ n ] : '
 read -r WARN
 
 if [[ -z $WARN ]] ; then
