@@ -15,7 +15,7 @@ if [[ $UNATTENDED -eq 1 ]] ; then
 
 		# Use tc to jack up your nets - tweak these values to match your use case
 
-		sudo sudo tc qdisc change dev eth0 root netem corrupt 15%
+		sudo tc qdisc change dev eth0 root netem corrupt 15%
 	
 		# run time of script has to be limited before reset - tune this to match your CI engine
 
@@ -53,7 +53,7 @@ read -r PING
 echo "Jacking up your network for $LENGTH seconds.  If you ctrl+c you need to manually reset your network!"
 echo "$ sudo tc qdisc del dev eth0 root netem"
 
-sudo sudo tc qdisc change dev eth0 root netem corrupt ${CORRUPTION}%
+sudo tc qdisc change dev eth0 root netem corrupt ${CORRUPTION}%
 
 if [[ -z $PING ]] ; then
 
