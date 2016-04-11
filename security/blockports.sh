@@ -69,8 +69,6 @@ fi
 
 	sleep $LENGTH
 
-fi
-
 echo "Resetting firewall  back to normal..."
 
 	sudo iptables -A INPUT -p tcp --destination-port $CLIENT -j ACCEPT
