@@ -3,7 +3,7 @@
 # You need to add a timeframe for automated runs so your CI engine can run tests against a jacked up system
 
 RUNTIME=10
-CLIENT=2370
+CLIENT=2379
 PEER=2380
 
 # cause network issues on your system
@@ -24,8 +24,8 @@ if [[ $UNATTENDED -eq 1 ]] ; then
                 
                	# reset the system
 
-		sudo iptables -A INPUT -p tcp --destination-port $CLIENT -j ACCEPT
-		sudo iptables -A INPUT -p tcp --destination-port $PEER -j ACCEPT
+		sudo sudo iptables -D INPUT 1
+		sudo sudo iptables -D INPUT 1
 		
  
         exit 0
@@ -71,8 +71,13 @@ fi
 
 echo "Resetting firewall  back to normal..."
 
-	sudo iptables -A INPUT -p tcp --destination-port $CLIENT -j ACCEPT
-	sudo iptables -A INPUT -p tcp --destination-port $PEER -j ACCEPT
+	sudo iptables -D INPUT 1
+
+if [[ $CPORT == "b" ]] ; then
+
+	sudo iptables -D INPUT 1
+fi
+
 
 echo "Done."
 
