@@ -50,7 +50,7 @@ fi
 # Execute the command
 
 echo "Jacking up your firewall for $LENGTH seconds.  If you ctrl+c you need to manually reset your iptables rules!"
-echo "$ sudo  iptables -A INPUT -p tcp --destination-port $CLIENT -j ACCEPT && sudo iptables -A INPUT -p tcp --destination-port $PEER -j ACCEPT"
+echo "$ sudo  iptables -D INPUT 1 && sudo  iptables -D INPUT 1"
 
 if [[ $CPORT == "b" ]] ; then
 
