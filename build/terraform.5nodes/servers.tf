@@ -77,7 +77,7 @@ resource "aws_instance" "etcd_test_04" {
   }
 }
 
-resource "aws_instance" "etcd_test_04" {
+resource "aws_instance" "etcd_test_05" {
   ami = "${var.coreos_ami}"
   associate_public_ip_address = true
   instance_type = "${var.instance_size}"
