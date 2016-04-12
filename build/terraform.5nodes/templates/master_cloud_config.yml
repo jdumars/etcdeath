@@ -1,0 +1,36 @@
+#cloud-config
+
+coreos:
+  etcd2:
+    proxy: on
+    initial_cluster: etcd_01=http://10.0.1.4:2380,etcd_02=http://10.0.1.5:2380,etcd_03=http://10.0.1.6:2380,etcd_04=http://10.0.1.7:2380,etcd_05=http://10.0.1.8:2380
+    listen-client-urls: http://127.0.0.1:2379
+  flannel:
+    etcd_endpoints: http://127.0.0.1:2379
+    interface: $private_ipv4
+  fleet:
+    etcd-servers: http://127.0.0.1:2379
+    metadata: etcd=proxy
+    public-ip: $private_ipv4
+  units:
+    - name: docker.service
+      command: start
+      drop-ins:
+        - name: 40-flannel.conf
+          content: |
+            [Unit]
+            Requires=flanneld.service
+            After=flanneld.service
+    - name: etcd2.service
+      command: start
+    - name: fleet.service
+      command: start
+    - name: flanneld.service
+      command: start
+      drop-ins:
+        - name: 50-network-config.conf
+          content: |
+            [Unit]
+            Requires=etcd2.service
+            [Service]
+            ExecStartPre=-/usr/bin/etcdctl mk /coreos.com/network/config "{\"Network\":\"10.2.0.0/16\"}"
