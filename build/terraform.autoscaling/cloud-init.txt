@@ -1,0 +1,21 @@
+#cloud-config
+
+coreos:
+  etcd2:
+    # name: ${name}
+    # generate a new token for each unique cluster from https://discovery.etcd.io/new?size=3
+    discovery: https://discovery.etcd.io/12699f8f033ac0c72fd9512abceced91
+    initial_advertise_peer_urls: http://$private_ipv4:2380
+    listen_peer_urls: http://$private_ipv4:2380
+    listen_client_urls: http://$private_ipv4:2379,http://127.0.0.1:2379
+    advertise_client_urls: http://$private_ipv4:2379
+    # proxy: on
+  fleet:
+    etcd_servers: http://127.0.0.1:2379
+    metadata: etcd=quorum
+    public_ip: $private_ipv4
+  units:
+    - name: etcd2.service
+      command: start
+    - name: fleet.service
+      command: start
