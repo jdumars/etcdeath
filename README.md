@@ -32,9 +32,18 @@ The scripts are divided into directories that describe the primary failure modes
 
 # Building your etcd cluster in AWS for testing
 
-I realized early on in this process that the bulk of the time testing will be destroying and recreating etcd clusters.  Therefore I created terraform files for spinning up either a 3-node or 5-node etcd cluster fronted by a bastion host in its own VPC.  The terraform directories are in either etcdeath/build/terraform.3node or etcdeath/build/terraform.5node and you'll need to do a 'brew install terraform' on Mac or visit https://www.terraform.io/ to get the binaries for your OS of choice.  
+I realized early on in this process that the bulk of the time testing will be destroying and recreating etcd clusters.  Therefore I created terraform files for spinning up either a 3-node, 5-node, or N-node autoscaling etcd cluster fronted by a bastion host in its own VPC.  The terraform directories are in either etcdeath/build/terraform.3node or etcdeath/build/terraform.5node etcdeath/build/terraform.autoscale and you'll need to do a 'brew install terraform' on Mac or visit https://www.terraform.io/ to get the binaries for your OS of choice.   While Terraform can be run directly on the 3 and 5 node configurations with no editing or alterations, the autoscaling configuration requires you to generate a new discovery token:
 
-Once in that directory:
+```
+curl https://discovery.etcd.io/new?size=3
+```
+This will return the string that you need to put in cloud-init:
+```
+https://discovery.etcd.io/12699f8f033ac0c72fd9512abceced91
+```
+That is the only change necessary, unless you want to change the autoscaling cluster geometry which lives in autoscaling.tf
+
+From that point forward, you can follow these instructions in any of the terraform.* directories:
 ```
 terraform plan
 ```

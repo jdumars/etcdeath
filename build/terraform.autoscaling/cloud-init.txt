@@ -4,7 +4,7 @@ coreos:
   etcd2:
     # name: ${name}
     # generate a new token for each unique cluster from https://discovery.etcd.io/new?size=3
-    discovery: https://discovery.etcd.io/12699f8f033ac0c72fd9512abceced91
+    discovery: https://discovery.etcd.io/<token>
     initial_advertise_peer_urls: http://$private_ipv4:2380
     listen_peer_urls: http://$private_ipv4:2380
     listen_client_urls: http://$private_ipv4:2379,http://127.0.0.1:2379
