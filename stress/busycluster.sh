@@ -59,8 +59,8 @@ if [ -z $COUNT ] ; then
                 curl -L -X PUT http://$IP:2379/v2/keys/$VAL -d value=$PAYLOAD
                 # Read key / val
                 curl -L http://$IP:2379/v2/keys/$VAL
-                echo $INC
-                INC=$[INC+1]
+                echo $COUNT
+                COUNT=$[COUNT+1]
 
 	done
 	exit 0
@@ -69,12 +69,13 @@ else
 	INC=1
 	while [ $INC -le $COUNT ] ; do
 
-                VAL=`echo $COUNT | $MD5 | cut -f1 -d ' ' `
+                VAL=`echo $INC | $MD5 | cut -f1 -d ' ' `
                 # Write key / val
                 curl -L -X PUT http://$IP:2379/v2/keys/$VAL -d value=$PAYLOAD
                 # Read key / val
                 curl -L http://$IP:2379/v2/keys/$VAL
-                COUNT=$[COUNT+1]
+                echo $INC
+                INC=$[INC+1]
 
   done
   exit 0
