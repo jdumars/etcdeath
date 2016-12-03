@@ -16,7 +16,13 @@ fi
 
 # Busy cluster activity generator - you can run more than one at a time to really hit the cluster.
 
-PAYLOAD_SIZE=32
+if [ -z $2 ] ; then
+ 	PAYLOAD_SIZE=32
+else
+
+	PAYLOAD_SIZE=$2
+fi 
+
 PAYLOAD=`cat /dev/urandom | tr -dc 'a-zA-Z0-9' | fold -w $PAYLOAD_SIZE | head -n 1`
 
 # Determine if md5 or md5sum
