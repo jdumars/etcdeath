@@ -48,25 +48,26 @@ printf '\n'
 printf 'Key count to write to etcd [ infinite ] : '
 read -r COUNT
 
-if [[ -z "$COUNT" ]] ; then
+if [ -z $COUNT ] ; then
 	
 	COUNT=1
 
-	while [[ $COUNT -lt 999999999999 ]] ; do
+	while [ $COUNT -lt 999999999999 ] ; do
 
 		VAL=`echo $COUNT | $MD5 | cut -f1 -d ' ' `
                 # Write key / val
                 curl -L -X PUT http://$IP:2379/v2/keys/$VAL -d value=$PAYLOAD
                 # Read key / val
                 curl -L http://$IP:2379/v2/keys/$VAL
-                COUNT=$[COUNT+1]
+                echo $INC
+                INC=$[INC+1]
 
 	done
 	exit 0
 
 else
 	INC=1
-	while [[ $COUNT -le $INC ]] ; do
+	while [ $INC -le $COUNT ] ; do
 
                 VAL=`echo $COUNT | $MD5 | cut -f1 -d ' ' `
                 # Write key / val
