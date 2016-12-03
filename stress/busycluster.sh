@@ -69,7 +69,7 @@ else
 	INC=1
 	while [ $INC -le $COUNT ] ; do
 
-                VAL=`echo $INC | $MD5 | cut -f1 -d ' ' `
+                VAL=`echo $COUNT | $MD5 | cut -f1 -d ' ' `
                 # Write key / val
                 curl -L -X PUT http://$IP:2379/v2/keys/$VAL -d value=$PAYLOAD
                 # Read key / val
