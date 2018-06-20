@@ -13,19 +13,10 @@ Be sure and look at the scripts because they have different options.  For exampl
 
 # Structure
 The scripts are divided into directories that describe the primary failure modes.  For example, *network* scripts will do things like drop interfaces or saturate links.  The directories are:
-* colo
-  - mishaps that occur in AWS and GCP
-* data
-  - data corruption, missing files
+
 * misc
   - random failure scenarios
 * network
   - interface mayhem, saturation, latency
-* security
-  - fun with iptables, patches and other security topics
 * stress
   - io usage, connection bombardment, busy systems
-* system
-  - reboots, version changes, unstable systems
-* user
-  - killed processes, mangled restarts, junior sysadmin stuff
